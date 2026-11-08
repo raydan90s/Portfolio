@@ -29,3 +29,5 @@ referencias-ia/
 # Fotos originales sin usar (el sitio usa las versiones .webp)
 public/fotos/*.HEIC
 public/fotos/*.jpeg
+referencias-ia.zip
+*.zip
