@@ -1,0 +1,25 @@
+---
+// Página completa; la usan /  (español) y /en/ (inglés)
+import Layout from '../layouts/Layout.astro';
+import Navbar from './Navbar.astro';
+import Hero from './Hero.astro';
+import Skills from './Skills.astro';
+import Projects from './Projects.astro';
+import Achievements from './Achievements.astro';
+import Experience from './Experience.astro';
+import Contact from './Contact.astro';
+import { profile } from '../data/portfolio';
+import { getLang, pick } from '../i18n/ui';
+const lang = getLang(Astro.currentLocale);
+---
+<Layout title={`${profile.name} — ${pick(profile.role, lang)}`} description={pick(profile.bio, lang)}>
+  <Navbar />
+  <main>
+    <Hero />
+    <Projects />
+    <Achievements />
+    <Experience />
+    <Skills />
+    <Contact />
+  </main>
+</Layout>

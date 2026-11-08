@@ -1,0 +1,55 @@
+---
+import { profile } from '../data/portfolio';
+import { getLang, useTranslations } from '../i18n/ui';
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const socials = profile.socials.filter((s) => s.href);
+---
+<section id="contacto" class="scroll-mt-24 border-t border-line">
+  <div class="mx-auto max-w-6xl px-4 py-28">
+    <p data-reveal class="text-xs font-bold tracking-widest text-accent-fg uppercase">{t('contact.desc')}</p>
+    <h2 data-reveal style="--d:80ms" class="mt-4 font-display text-8xl leading-[0.85] uppercase sm:text-[10rem]">{t('contact.title')}</h2>
+
+    <!-- Email: clic en el texto abre el correo; el botón lo copia -->
+    <div data-reveal style="--d:160ms" class="mt-12 flex flex-wrap items-center gap-x-6 gap-y-4 border-y border-line py-8">
+      <a href={`mailto:${profile.email}`} class="link-underline min-w-0 pb-1 text-2xl font-bold break-all sm:text-4xl lg:text-5xl">{profile.email}</a>
+      <button type="button" id="copy-email" data-email={profile.email} data-copied={t('contact.copied')}
+              class="ml-auto inline-flex shrink-0 items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-bold text-on-accent uppercase transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+        <span aria-live="polite">{t('contact.copy')}</span>
+      </button>
+    </div>
+
+    <ul data-reveal style="--d:240ms" class="mt-8 flex flex-wrap gap-3">
+      {socials.map((s) => (
+        <li>
+          <a href={s.href} target="_blank" rel="noopener"
+             class="group inline-flex items-center gap-3 rounded-full bg-surface py-3 pr-5 pl-4 font-bold transition-colors duration-150 hover:bg-surface-2">
+            <span class="icon-mask h-5 w-5 text-accent-fg" style={`--icon:url(${s.icon})`} aria-hidden="true"></span>
+            {s.label}
+            <span class="text-muted transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+  <footer class="border-t border-line py-6 text-center text-sm text-muted">
+    © {new Date().getFullYear()} {profile.name}
+  </footer>
+</section>
+
+<script>
+  const btn = document.getElementById('copy-email') as HTMLButtonElement | null;
+  const label = btn?.querySelector('span');
+  btn?.addEventListener('click', async () => {
+    if (!label) return;
+    try {
+      await navigator.clipboard.writeText(btn.dataset.email!);
+      const original = label.textContent;
+      label.textContent = btn.dataset.copied!;
+      setTimeout(() => (label.textContent = original), 2000);
+    } catch {
+      location.href = `mailto:${btn.dataset.email}`; // sin portapapeles: abre el correo
+    }
+  });
+</script>

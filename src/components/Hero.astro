@@ -1,0 +1,38 @@
+---
+import { profile } from '../data/portfolio';
+import { getLang, useTranslations, pick } from '../i18n/ui';
+import SocialLinks from './SocialLinks.astro';
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+---
+<section class="relative mx-auto grid min-h-svh max-w-6xl items-center gap-12 px-4 pt-24 pb-16 md:grid-cols-2 md:items-start md:pt-28">
+  <div class="md:pt-12">
+    <h1 class="font-display text-7xl leading-[0.9] uppercase sm:text-8xl">
+      <span class="line"><span style="--d:200ms">{t('hero.greeting')}</span></span>
+      <span class="line"><span style="--d:320ms">{profile.name}.</span></span>
+    </h1>
+    <p class="fade-up mt-6 max-w-md text-muted" style="--d:550ms">{pick(profile.bio, lang)}</p>
+
+    <div class="fade-up mt-10 flex flex-wrap items-center gap-3" style="--d:680ms">
+      <a href="#contacto"
+         class="group inline-flex items-center gap-4 rounded-full bg-accent py-2 pr-2 pl-5 text-sm font-bold text-on-accent uppercase transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]">
+        {t('hero.cta')}
+        <span class="grid h-8 w-8 place-items-center rounded-full bg-on-accent text-accent transition-transform duration-300 group-hover:rotate-45">↗</span>
+      </a>
+      <SocialLinks />
+      <a href={pick(profile.cv, lang)} download
+         class="link-underline ml-1 pb-0.5 text-sm font-bold tracking-wide text-muted uppercase transition-colors duration-150 hover:text-fg">
+        {t('hero.cv')} ↓
+      </a>
+    </div>
+  </div>
+
+  <div class="relative">
+    <div class="glow pointer-events-none absolute -inset-16 -z-10" aria-hidden="true"></div>
+    <div class="photo-reveal aspect-[4/5] overflow-hidden rounded-xl bg-[#c7c7c7]" style="--d:300ms">
+      {profile.photo
+        ? <img src={profile.photo} alt={profile.name} class="h-full w-full object-cover" />
+        : <div class="ph grid h-full place-items-center text-sm text-black/60">{t('hero.photo')}</div>}
+    </div>
+  </div>
+</section>

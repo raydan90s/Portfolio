@@ -1,0 +1,162 @@
+@import "tailwindcss";
+
+/* ── Colores por tema ─────────────────────────────────────
+   Las utilidades (bg-ink, text-muted…) leen estas variables,
+   así que cambiar data-theme en <html> cambia todo el sitio. */
+:root, [data-theme="dark"] {
+  --ink: #0a0a0a;          /* fondo */
+  --surface: #1a1a1a;      /* tarjetas */
+  --surface-2: #262626;    /* hover */
+  --line: #ffffff1a;
+  --fg: #ffffff;
+  --muted: #c7c7c7;
+  --accent: #d3e97a;       /* verde lima (rellenos) */
+  --accent-fg: #d3e97a;    /* acento para texto/bordes */
+  --grid: #ffffff06;
+  color-scheme: dark;
+}
+[data-theme="light"] {
+  --ink: #f4f4ef;
+  --surface: #ffffff;
+  --surface-2: #e9e9e3;
+  --line: #0000001a;
+  --fg: #0a0a0a;
+  --muted: #555555;
+  --accent: #d3e97a;
+  --accent-fg: #4f6b00;    /* lima oscuro: legible sobre fondo claro */
+  --grid: #00000008;
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-on-accent: #0a0a0a;
+}
+
+@theme {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bebas Neue", Impact, sans-serif;
+}
+
+/* ── Identidad de movimiento ─────────────────────────────
+   1 curva principal, 3 duraciones, 1 patrón de entrada (sube + aparece) */
+:root {
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emph: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --t-quick: 150ms;
+  --t-base: 300ms;
+  --t-slow: 700ms;
+}
+
+html { scroll-behavior: smooth; }
+body { @apply bg-ink text-fg font-sans antialiased; }
+::selection { background: var(--accent); color: #0a0a0a; }
+
+.grid-lines {
+  background-image: repeating-linear-gradient(
+    to right, transparent 0, transparent calc(25% - 1px), var(--grid) calc(25% - 1px), var(--grid) 25%
+  );
+}
+
+/* Íconos de marca que toman el color del texto (currentColor) */
+.icon-mask {
+  display: inline-block;
+  background-color: currentColor;
+  mask: var(--icon) center / contain no-repeat;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+}
+
+/* ── Transiciones entre páginas (cambio de idioma) y de tema ── */
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) {
+  animation-duration: 400ms;
+  animation-timing-function: var(--ease);
+}
+
+/* ── Scroll reveal ────────────────────────────────────────
+   Solo se oculta si hay JS (clase .js en <html>), así nunca queda contenido invisible */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--t-slow) var(--ease),
+    transform var(--t-slow) var(--ease-emph);
+  transition-delay: var(--d, 0ms);
+}
+.js [data-reveal="scale"] { transform: translateY(24px) scale(0.96); }
+.js [data-reveal].is-visible { opacity: 1; transform: none; }
+
+/* ── Entrada del hero (al cargar) ─────────────────────── */
+.line { display: block; overflow: hidden; padding-bottom: 0.05em; }
+.line > span { display: block; animation: rise 900ms var(--ease-emph) both; animation-delay: var(--d, 0ms); }
+.fade-up { animation: fade-up var(--t-slow) var(--ease) both; animation-delay: var(--d, 0ms); }
+.photo-reveal { animation: clip-up 1100ms var(--ease-emph) both; animation-delay: var(--d, 0ms); }
+.photo-reveal img, .photo-reveal .ph { animation: settle 1400ms var(--ease) both; animation-delay: var(--d, 0ms); }
+
+@keyframes rise    { from { transform: translateY(105%); } to { transform: none; } }
+@keyframes fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes clip-up { from { clip-path: inset(100% 0 0 0 round 12px); } to { clip-path: inset(0 0 0 0 round 12px); } }
+@keyframes settle  { from { transform: scale(1.12); } to { transform: scale(1); } }
+
+/* ── Capa ambiental ───────────────────────────────────── */
+.glow {
+  background: radial-gradient(circle, #d3e97a40 0%, transparent 65%);
+  filter: blur(40px);
+  animation: drift 14s ease-in-out infinite alternate;
+}
+@keyframes drift { from { transform: translate(-6%, -4%); } to { transform: translate(6%, 5%); } }
+
+.pulse-dot { position: relative; }
+.pulse-dot::after {
+  content: ""; position: absolute; inset: 0; border-radius: 9999px; background: currentColor;
+  animation: ping 2.4s var(--ease) infinite;
+}
+@keyframes ping { 0% { transform: scale(1); opacity: .6; } 70%, 100% { transform: scale(2.6); opacity: 0; } }
+
+/* ── Micro-interacciones ─────────────────────────────── */
+.link-underline { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size var(--t-base) var(--ease); }
+.link-underline:hover { background-size: 100% 1px; }
+
+/* Navbar en píldora: fondo translúcido, más sólido al bajar */
+.nav-pill {
+  background-color: color-mix(in srgb, var(--surface) 55%, transparent);
+  -webkit-backdrop-filter: blur(16px) saturate(1.6);
+  backdrop-filter: blur(16px) saturate(1.6);
+  transition: background-color var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease);
+}
+#nav[data-scrolled] .nav-pill { background-color: color-mix(in srgb, var(--surface) 70%, transparent); box-shadow: 0 8px 32px -8px #0000004d; }
+#nav-links.is-ready #nav-indicator { transition: transform 500ms var(--ease-emph), width 500ms var(--ease-emph), opacity var(--t-base) var(--ease); }
+[data-nav-link][aria-current] { color: var(--ink); }
+[data-nav-link][aria-current] .nav-badge { background-color: color-mix(in srgb, var(--ink) 15%, transparent); color: var(--ink); }
+
+/* Botón de tema: sol en oscuro, luna en claro, con giro al cambiar */
+.theme-icon { transition: transform 500ms var(--ease-emph), opacity var(--t-base) var(--ease); }
+[data-theme="dark"] .theme-icon.moon, [data-theme="light"] .theme-icon.sun { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+
+/* ── Carrusel infinito de skills ─────────────────────── */
+.marquee-row { mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent); }
+.marquee-track { animation: marquee var(--dur, 40s) linear infinite; }
+.marquee-track.is-reverse { animation-direction: reverse; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* Accesibilidad: si el usuario pidió menos movimiento, se desactiva todo */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after, ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* Carrusel quieto: se muestra la lista una vez, envuelta en varias líneas */
+  .marquee-track { animation: none !important; width: auto; justify-content: center; padding-inline: 1rem; }
+  .marquee-track > ul { flex-wrap: wrap; flex-shrink: 1; justify-content: center; padding-right: 0; }
+  .marquee-track > ul[aria-hidden] { display: none; }
+  .marquee-row { mask-image: none; }
+}

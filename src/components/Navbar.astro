@@ -1,0 +1,97 @@
+---
+import { profile, projects } from '../data/portfolio';
+import { getLang, useTranslations } from '../i18n/ui';
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+// mobile: true = se ve también en pantallas pequeñas
+const links = [
+  { label: t('nav.home'), href: '#', mobile: true },
+  { label: t('nav.work'), href: '#proyectos', mobile: true, badge: projects.length },
+  { label: t('nav.achievements'), href: '#logros', mobile: false },
+  { label: t('nav.experience'), href: '#experiencia', mobile: false },
+  { label: t('nav.contact'), href: '#contacto', mobile: true },
+];
+const otherLang = lang === 'es' ? 'en' : 'es';
+const otherHref = otherLang === 'en' ? '/en/' : '/';
+const btn = 'grid h-9 place-items-center rounded-full text-muted transition-colors duration-150 hover:bg-surface-2 hover:text-fg';
+---
+<header id="nav" class="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-4">
+  <!-- Una sola píldora: enlaces + idioma + tema -->
+  <nav aria-label={profile.name} class="nav-pill fade-up pointer-events-auto flex items-center gap-1 rounded-full border border-line p-1" style="--d:100ms">
+    <ul id="nav-links" class="relative flex items-center text-sm">
+      <span id="nav-indicator" aria-hidden="true" class="absolute inset-y-0 left-0 rounded-full bg-fg opacity-0"></span>
+      {links.map((l) => (
+        <li class={l.mobile ? '' : 'hidden sm:block'}>
+          <a href={l.href} data-nav-link
+             class="relative z-10 flex items-center gap-1.5 rounded-full px-3 py-2 text-muted transition-colors duration-300 hover:text-fg sm:px-4">
+            {l.badge !== undefined && (
+              <span class="nav-badge grid h-4 min-w-4 place-items-center rounded-full bg-muted px-1 text-[10px] leading-none font-bold text-ink">{l.badge}</span>
+            )}
+            {l.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <span class="mx-1 h-5 w-px bg-line" aria-hidden="true"></span>
+
+    <div class="flex items-center">
+      <!-- Idioma -->
+      <a href={otherHref} hreflang={otherLang} aria-label={t('lang.switch')} title={t('lang.switch')}
+         class={`${btn} min-w-9 px-2 text-xs font-bold tracking-wider uppercase`}>
+        {otherLang}
+      </a>
+      <!-- Tema -->
+      <button id="theme-toggle" type="button" aria-label={t('theme.toggle')} title={t('theme.toggle')}
+              class={`${btn} relative w-9`}>
+        <svg class="theme-icon sun absolute h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.5" />
+          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+        </svg>
+        <svg class="theme-icon moon absolute h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<script>
+  // Scroll spy: mueve el indicador al enlace de la sección visible
+  const list = document.getElementById('nav-links')!;
+  const indicator = document.getElementById('nav-indicator')!;
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]')];
+  const sections = links.map((a) => {
+    const id = a.getAttribute('href')!.slice(1);
+    return id ? document.getElementById(id) : null; // null = Inicio (arriba del todo)
+  });
+  let current: HTMLAnchorElement | null = null;
+
+  const place = (a: HTMLAnchorElement) => {
+    const visible = a.offsetParent !== null;
+    indicator.style.opacity = visible ? '1' : '0';
+    if (!visible) return;
+    indicator.style.width = `${a.offsetWidth}px`;
+    indicator.style.transform = `translateX(${a.offsetLeft}px)`;
+  };
+
+  const update = () => {
+    const line = innerHeight * 0.4;
+    let active = links[0];
+    sections.forEach((s, i) => { if (s && s.getBoundingClientRect().top <= line) active = links[i]; });
+    // Al final de la página, Contacto
+    if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) active = links[links.length - 1];
+    if (active === current) return;
+    current?.removeAttribute('aria-current');
+    active.setAttribute('aria-current', 'true');
+    current = active;
+    place(active);
+  };
+
+  addEventListener('scroll', update, { passive: true });
+  addEventListener('resize', () => current && place(current));
+  update();
+  // Activa la animación después de la primera posición (sin deslizarse al cargar)
+  requestAnimationFrame(() => list.classList.add('is-ready'));
+  document.fonts?.ready.then(() => current && place(current));
+</script>

@@ -1,0 +1,35 @@
+---
+import { skillRows } from '../data/portfolio';
+import { tech } from '../data/tech';
+import { getLang, useTranslations } from '../i18n/ui';
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+---
+<section id="skills" class="scroll-mt-24 py-24">
+  <h2 data-reveal class="mx-auto max-w-6xl px-4 font-display text-6xl uppercase">{t('skills.title')}</h2>
+
+  <div data-reveal class="marquee mt-12 space-y-6">
+    {skillRows.map((row, r) => (
+      <div class="marquee-row overflow-hidden">
+        <!-- La lista va dos veces para que el bucle no tenga salto; la copia es solo visual -->
+        <div class={`marquee-track flex w-max ${r % 2 ? 'is-reverse' : ''}`} style={`--dur:${row.length * 4}s`}>
+          {[0, 1].map((copy) => (
+            <ul class="flex shrink-0 items-center gap-4 pr-4" aria-hidden={copy === 1 ? 'true' : undefined}>
+              {row.map((name) => {
+                const it = tech[name];
+                return (
+                  <li class="flex items-center gap-3 rounded-full border border-line bg-surface py-3 pr-6 pl-4">
+                    {it && (it.mono
+                      ? <span class="icon-mask h-7 w-7 text-fg" style={`--icon:url(${it.icon})`} aria-hidden="true"></span>
+                      : <img src={it.icon} alt="" class="h-7 w-7 object-contain" loading="lazy" />)}
+                    <span class="text-lg font-bold whitespace-nowrap">{name}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
