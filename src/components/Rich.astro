@@ -1,0 +1,9 @@
+---
+// Texto con resaltados: ==acento== (color de acento) y **negrita** (blanco/negrita).
+interface Props { text: string }
+const parts = Astro.props.text.split(/(==[^=]+==|\*\*[^*]+\*\*)/).filter(Boolean);
+---
+{parts.map((s) =>
+  s.startsWith('==') ? <strong class="font-bold text-accent-fg">{s.slice(2, -2)}</strong>
+  : s.startsWith('**') ? <strong class="font-semibold text-fg">{s.slice(2, -2)}</strong>
+  : s)}

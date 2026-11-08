@@ -2,6 +2,7 @@
 import { profile } from '../data/portfolio';
 import { getLang, useTranslations, pick } from '../i18n/ui';
 import SocialLinks from './SocialLinks.astro';
+import Rich from './Rich.astro';
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
 ---
@@ -11,7 +12,9 @@ const t = useTranslations(lang);
       <span class="line"><span style="--d:200ms">{t('hero.greeting')}</span></span>
       <span class="line"><span style="--d:320ms">{profile.name}.</span></span>
     </h1>
-    <p class="fade-up mt-6 max-w-md text-muted" style="--d:550ms">{pick(profile.bio, lang)}</p>
+    <p class="fade-up mt-6 max-w-lg text-lg leading-relaxed text-muted" style="--d:550ms">
+      <Rich text={pick(profile.bio, lang)} />
+    </p>
 
     <div class="fade-up mt-10 flex flex-wrap items-center gap-3" style="--d:680ms">
       <a href="#contacto"

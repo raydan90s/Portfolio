@@ -2,6 +2,7 @@
 import { projects } from '../data/portfolio';
 import { getLang, useTranslations, pick } from '../i18n/ui';
 import TechTag from './TechTag.astro';
+import Rich from './Rich.astro';
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
 ---
@@ -15,9 +16,9 @@ const t = useTranslations(lang);
     {projects.map((p, i) => (
       <article class="grid items-center gap-10 md:grid-cols-2">
         <a href={p.links[0]?.href} target="_blank" rel="noopener" data-reveal="scale"
-           class={`group block aspect-[3/2] overflow-hidden rounded-xl ${p.image ? '' : 'bg-surface'} ${i % 2 ? 'md:order-2' : ''}`}>
+           class={`group block aspect-[3/2] rounded-xl ${p.image ? '' : 'overflow-hidden bg-surface'} ${i % 2 ? 'md:order-2' : ''}`}>
           {p.image
-            ? <img src={p.image} alt={p.title} class="h-full w-full object-contain transition-transform duration-700 ease-[var(--ease)] group-hover:scale-105" loading="lazy" />
+            ? <img src={p.image} alt={p.title} class="h-full w-full object-contain transition-transform duration-700 ease-[var(--ease)] group-hover:-translate-y-1.5 group-hover:scale-[1.03]" loading="lazy" />
             : (
               <div class="relative grid h-full place-items-center transition-transform duration-700 ease-[var(--ease)] group-hover:scale-105"
                    style={`background: radial-gradient(120% 90% at 30% 20%, ${p.color}55, transparent 60%), var(--surface)`}>
@@ -31,7 +32,7 @@ const t = useTranslations(lang);
           <span class="text-sm font-bold text-accent-fg">{String(i + 1).padStart(2, '0')} · {pick(p.period, lang)}</span>
           <h3 class="mt-2 text-3xl font-bold">{p.title}</h3>
           <p class="mt-1 text-sm font-semibold text-muted">{pick(p.role, lang)}</p>
-          <p class="mt-4 text-muted">{pick(p.desc, lang)}</p>
+          <p class="mt-4 leading-relaxed text-muted"><Rich text={pick(p.desc, lang)} /></p>
           <ul class="mt-5 flex flex-wrap gap-2">
             {p.tags.map((tag) => <TechTag name={tag} />)}
           </ul>

@@ -11,9 +11,10 @@ export const profile = {
   name: 'Diego Parrales',
   role: { es: 'Desarrollador de Software', en: 'Software Developer' } as T,
   location: 'Guayaquil, Ecuador',
+  // ==texto== = resaltado con el color de acento · **texto** = resaltado en blanco/negrita
   bio: {
-    es: 'Estudiante de Ciencias de la Computación en ESPOL, fundador de Alata y CEO de AI BOTS. Construyo apps móviles, agentes de IA y software empresarial sobre AWS.',
-    en: 'Computer Science student at ESPOL, founder of Alata and CEO of AI BOTS. I build mobile apps, AI agents and business software on AWS.',
+    es: '==Fundador== de **Alata** y ==CEO== de **AI BOTS**. Llevo productos de la idea a producción: **apps móviles**, **agentes de IA** y **software empresarial** sobre AWS. Ganador del **1.er lugar** en una hackathon de agentes de IA. Ciencias de la Computación en ESPOL.',
+    en: '==Founder== of **Alata** and ==CEO== of **AI BOTS**. I take products from idea to production: **mobile apps**, **AI agents** and **business software** on AWS. **1st place** winner at an AI agents hackathon. Computer Science at ESPOL.',
   } as T,
   photo: '/fotos/portada.webp',
   email: 'diegoparrales2005@gmail.com',
@@ -44,8 +45,8 @@ export const projects = [
     role: { es: 'Fundador y CEO', en: 'Founder & CEO' },
     period: { es: '2026 – Actualidad', en: '2026 – Present' },
     desc: {
-      es: 'App de carpooling universitario que conecta a estudiantes conductores y pasajeros en Guayaquil. Dirijo la estrategia de producto y la arquitectura de la app móvil y del backend, desplegado en AWS.',
-      en: 'University carpooling app that connects student drivers and passengers in Guayaquil. I lead product strategy and the architecture of the mobile app and backend, deployed on AWS.',
+      es: '**App de carpooling universitario** publicada en **iOS y Android** que conecta a estudiantes conductores y pasajeros verificados de Guayaquil. Dirijo la **estrategia de producto** y la **arquitectura** de la app y del backend en AWS.',
+      en: '**University carpooling app** live on **iOS and Android** that connects verified student drivers and passengers in Guayaquil. I lead **product strategy** and the **architecture** of the app and backend on AWS.',
     },
     tags: ['React Native', 'Expo', 'AWS', 'TypeScript'],
     color: '#F1B007', // dorado de marca Alata
@@ -62,8 +63,8 @@ export const projects = [
     role: { es: 'CEO · Colaboración y desarrollo', en: 'CEO · Collaboration & development' },
     period: { es: '2026 – Actualidad', en: '2026 – Present' },
     desc: {
-      es: 'Doxi: chatbots con IA que atienden, agendan y venden en la web y en WhatsApp, y Doxi Concilia, conciliación bancaria para contadores. Presento las soluciones a colegios y clientes; el Colegio Alemán ya es cliente.',
-      en: 'Doxi: AI chatbots that answer, book and sell on the web and WhatsApp, plus Doxi Concilia, bank reconciliation for accountants. I pitch the solutions to schools and clients; the German School is already a client.',
+      es: 'Plataforma de **agentes de IA** para negocios. Doxi **atiende, agenda citas y vende** las **24 horas** en la web, WhatsApp, Messenger e Instagram, entrenado con la información de cada empresa y con un panel para gestionar conversaciones, clientes y estadísticas.',
+      en: '**AI agents** platform for businesses. Doxi **answers, books appointments and sells** **24/7** on the web, WhatsApp, Messenger and Instagram, trained on each company’s own information, with a dashboard to manage conversations, clients and analytics.',
     },
     tags: ['IA', 'Chatbots', 'WhatsApp', 'AWS'],
     color: '#D72B2B', // rojo de marca AI BOTS
@@ -78,8 +79,8 @@ export const projects = [
     role: { es: 'Líder de proyecto · ERP empresarial', en: 'Project lead · Business ERP' },
     period: { es: 'Nov 2025 – Nov 2026', en: 'Nov 2025 – Nov 2026' },
     desc: {
-      es: 'ERP a medida (SOAC) para la clínica dental Consultorios Arrobo: agenda de citas por doctor, historia clínica y odontograma, inventario y bodegas, contabilidad y facturación electrónica autorizada por el SRI.',
-      en: 'Custom ERP (SOAC) for the Consultorios Arrobo dental clinic: per-doctor appointment scheduling, clinical records and dental charts, inventory and warehouses, accounting and SRI-authorized electronic invoicing.',
+      es: '**ERP a medida** que centraliza toda la operación de la clínica dental Consultorios Arrobo en una sola plataforma: **agenda de citas** por doctor, **historia clínica** con odontograma, inventario y bodegas, contabilidad y **facturación electrónica** autorizada por el SRI. Lideré el proyecto de punta a punta.',
+      en: '**Custom ERP** that runs the entire operation of the Consultorios Arrobo dental clinic on a single platform: per-doctor **appointment scheduling**, **clinical records** with dental charts, inventory and warehouses, accounting and SRI-authorized **electronic invoicing**. I led the project end to end.',
     },
     tags: ['React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express', 'PostgreSQL', 'Docker', '.NET'],
     color: '#2E2F93', // morado de marca Arrobo
@@ -88,11 +89,11 @@ export const projects = [
   },
   {
     title: 'Brokeate',
-    role: { es: 'Robo-advisor con IA · 1.er lugar hackathon', en: 'AI robo-advisor · Hackathon 1st place' },
+    role: { es: 'Propuestas de portafolio de inversión con IA · 1.er lugar hackathon', en: 'AI investment portfolio proposals · Hackathon 1st place' },
     period: { es: '2026', en: '2026' },
     desc: {
-      es: 'Robo-advisor con asesor humano en el lazo: el cliente hace un test de riesgo, el sistema arma una propuesta de portafolio y un agente de IA (LangGraph) la explica. App móvil, web y API FastAPI desplegada en AWS.',
-      en: 'Robo-advisor with a human advisor in the loop: the client takes a risk test, the system builds a portfolio proposal and an AI agent (LangGraph) explains it. Mobile app, web and FastAPI backend deployed on AWS.',
+      es: 'Arma **propuestas de portafolio de inversión** según el perfil de riesgo de cada cliente. Un **agente de IA** explica cada decisión y un **asesor humano** la aprueba.',
+      en: 'Builds **investment portfolio proposals** based on each client’s risk profile. An **AI agent** explains every decision and a **human advisor** approves it.',
     },
     tags: ['React Native', 'Expo', 'TypeScript', 'FastAPI', 'LangGraph', 'Supabase', 'AWS'],
     color: '#22C55E',
@@ -130,8 +131,8 @@ export const achievements = [
     event: { es: 'Hackathon Agentic Scale by TAWS', en: 'Agentic Scale Hackathon by TAWS' },
     year: '2026',
     desc: {
-      es: 'Ecuador Tech Week · 18 jul 2026. Premio de $1,000 con Brokeate, robo-advisor con agentes de IA.',
-      en: 'Ecuador Tech Week · Jul 18, 2026. $1,000 prize with Brokeate, an AI-agent robo-advisor.',
+      es: 'Ecuador Tech Week · 18 jul 2026. Premio de $1,000 con Brokeate, propuestas de portafolio de inversión con agentes de IA.',
+      en: 'Ecuador Tech Week · Jul 18, 2026. $1,000 prize with Brokeate, AI-agent investment portfolio proposals.',
     },
     href: 'https://www.instagram.com/p/DcGjKz5lrTw/',
     color: '#d3e97a',
@@ -143,8 +144,8 @@ export const achievements = [
     event: { es: 'HackIAthon 3.ª edición by Viamatica', en: 'HackIAthon 3rd edition by Viamatica' },
     year: '2026',
     desc: {
-      es: '5 jun 2026. Premio de $500 con una solución de inteligencia artificial.',
-      en: 'Jun 5, 2026. $500 prize with an artificial intelligence solution.',
+      es: '5 jun 2026. Premio de $500 con una solución de IA que detecta y advierte posibles fraudes.',
+      en: 'Jun 5, 2026. $500 prize with an AI solution that detects and flags potential fraud.',
     }, // TODO: nombre del proyecto presentado
     href: 'https://lnkd.in/p/eVdNAFmp',
     color: '#c98a4b',
@@ -163,7 +164,10 @@ export const experience = [
     org: 'ESPOL',
     role: { es: 'Ayudante de Laboratorio de Computación — FCSH', en: 'Computer Lab Assistant — FCSH' },
     period: { es: 'Oct 2026 – Feb 2027', en: 'Oct 2026 – Feb 2027' },
-    desc: { es: '', en: '' },
+    desc: {
+      es: 'Me encargo de que todos los servicios tecnológicos funcionen correctamente en las áreas a mi cargo.',
+      en: 'I make sure all technology services run properly across the areas under my responsibility.',
+    },
   },
   {
     org: 'ESPOL',
@@ -175,7 +179,10 @@ export const experience = [
     org: 'ESPOL',
     role: { es: 'Ayudante de Cátedra — Fundamentos de Programación', en: 'Teaching Assistant — Fundamentals of Programming' },
     period: { es: 'Oct 2024 – Ene 2025', en: 'Oct 2024 – Jan 2025' },
-    desc: { es: 'Apoyo a estudiantes en tareas, laboratorios y resolución de problemas.', en: 'Supported students with coursework, labs and problem-solving.' },
+    desc: {
+      es: 'Apoyo a estudiantes en tareas, laboratorios y resolución de problemas, guiándolos con ejercicios prácticos de programación.',
+      en: 'Supported students with coursework, labs and problem-solving, guiding them through hands-on programming exercises.',
+    },
   },
 ];
 

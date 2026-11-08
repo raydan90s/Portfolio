@@ -12,7 +12,7 @@ import { profile } from '../data/portfolio';
 import { getLang, pick } from '../i18n/ui';
 const lang = getLang(Astro.currentLocale);
 ---
-<Layout title={`${profile.name} — ${pick(profile.role, lang)}`} description={pick(profile.bio, lang)}>
+<Layout title={`${profile.name} — ${pick(profile.role, lang)}`} description={pick(profile.bio, lang).replace(/==|\*\*/g, '')}>
   <Navbar />
   <main>
     <Hero />
